@@ -1,23 +1,77 @@
 import re
 import requests
-import quiverquant
 import pandas as pd
 import streamlit as st
 import yfinance as yf
 from bs4 import BeautifulSoup
 
+_HEADERS = {"User-Agent": "Mozilla/5.0"}
+
 
 @st.cache_data(ttl=3600)
 def fetch_congress_trades():
+    frames = []
+
     try:
-        q = quiverquant.quiver('')
-        df = q.congress_trading()
-        df['ReportDate'] = pd.to_datetime(df['ReportDate'])
-        df['TransactionDate'] = pd.to_datetime(df['TransactionDate'])
-        return df
+        r = requests.get(
+            "https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/all_transactions.json",
+            headers=_HEADERS, timeout=30,
+        )
+        r.raise_for_status()
+        hdf = pd.DataFrame(r.json()).rename(columns={
+            "transaction_date": "TransactionDate",
+            "disclosure_date":  "ReportDate",
+            "ticker":           "Ticker",
+            "type":             "Transaction",
+            "amount":           "Range",
+            "representative":   "Representative",
+            "party":            "Party",
+        })
+        hdf["House"] = "House"
+        frames.append(hdf)
     except Exception as e:
-        st.error(f"Error fetching data: {e}")
+        st.warning(f"Could not fetch House trades: {e}")
+
+    try:
+        r = requests.get(
+            "https://senate-stock-watcher-data.s3-us-west-2.amazonaws.com/aggregate/all_transactions.json",
+            headers=_HEADERS, timeout=30,
+        )
+        r.raise_for_status()
+        sdf = pd.DataFrame(r.json()).rename(columns={
+            "transaction_date": "TransactionDate",
+            "disclosure_date":  "ReportDate",
+            "ticker":           "Ticker",
+            "type":             "Transaction",
+            "amount":           "Range",
+            "senator":          "Representative",
+            "party":            "Party",
+        })
+        sdf["House"] = "Senate"
+        frames.append(sdf)
+    except Exception as e:
+        st.warning(f"Could not fetch Senate trades: {e}")
+
+    if not frames:
+        st.error("No trade data could be loaded.")
         return pd.DataFrame()
+
+    df = pd.concat(frames, ignore_index=True)
+
+    keep = ["TransactionDate", "ReportDate", "Representative", "House", "Party", "Ticker", "Transaction", "Range"]
+    df = df[[c for c in keep if c in df.columns]]
+
+    df["TransactionDate"] = pd.to_datetime(df["TransactionDate"], errors="coerce")
+    df["ReportDate"]      = pd.to_datetime(df["ReportDate"],      errors="coerce")
+
+    def _norm(t):
+        t = str(t).lower()
+        return "Purchase" if ("purchase" in t or "buy" in t) else "Sale"
+
+    df["Transaction"] = df["Transaction"].apply(_norm)
+    df = df[df["Ticker"].notna() & (df["Ticker"].str.strip() != "")]
+
+    return df
 
 
 def get_totals(df_sub):
