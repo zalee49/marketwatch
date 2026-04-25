@@ -7,15 +7,69 @@ from bs4 import BeautifulSoup
 
 _HEADERS = {"User-Agent": "Mozilla/5.0"}
 
+# Party lookup for senators (D=Democrat, R=Republican, I=Independent)
+_SENATOR_PARTY = {
+    "warnock": "D", "ossoff": "D", "schumer": "D", "gillibrand": "D",
+    "warren": "D", "markey": "D", "sanders": "I", "leahy": "D",
+    "durbin": "D", "duckworth": "D", "klobuchar": "D", "smith": "D",
+    "shaheen": "D", "hassan": "D", "menendez": "D", "booker": "D",
+    "heinrich": "D", "lujan": "D", "gillibrand": "D", "whitehouse": "D",
+    "reed": "D", "cantwell": "D", "murray": "D", "manchin": "D",
+    "capito": "R", "wyden": "D", "merkley": "D", "casey": "D",
+    "fetterman": "D", "cardin": "D", "van hollen": "D", "king": "I",
+    "collins": "R", "stabenow": "D", "peters": "D", "kaine": "D",
+    "warner": "D", "carper": "D", "coons": "D", "blumenthal": "D",
+    "murphy": "D", "padilla": "D", "butler": "D", "cortez masto": "D",
+    "rosen": "D", "hickenlooper": "D", "bennet": "D", "young": "R",
+    "braun": "R", "cornyn": "R", "cruz": "R", "thune": "R",
+    "rounds": "R", "grassley": "R", "ernst": "R", "moran": "R",
+    "marshall": "R", "mcconnell": "R", "paul": "R", "portman": "R",
+    "brown": "D", "shelby": "R", "tuberville": "R", "wicker": "R",
+    "hyde-smith": "R", "rubio": "R", "scott": "R", "burr": "R",
+    "tillis": "R", "blunt": "R", "hawley": "R", "toomey": "R",
+    "boozman": "R", "cotton": "R", "inhofe": "R", "lankford": "R",
+    "crapo": "R", "risch": "R", "daines": "R", "tester": "D",
+    "murkowski": "R", "sullivan": "R", "romney": "R", "lee": "R",
+    "capito": "R", "barrasso": "R", "lummis": "R", "enzi": "R",
+    "johnson": "R", "baldwin": "D", "loeffler": "R", "isakson": "R",
+    "perdue": "R", "kelly": "D", "sinema": "I", "cramer": "R",
+    "hoeven": "R", "cassidy": "R", "kennedy": "R", "sasse": "R",
+    "fischer": "R", "ben ray lujan": "D", "luján": "D",
+}
+
 
 @st.cache_data(ttl=3600)
 def fetch_congress_trades():
     frames = []
 
+    # Senate: GitHub data repo (free, no API key, updated regularly)
+    try:
+        r = requests.get(
+            "https://raw.githubusercontent.com/timothycarambat/senate-stock-watcher-data/master/aggregate/all_transactions.json",
+            headers=_HEADERS, timeout=30,
+        )
+        r.raise_for_status()
+        sdf = pd.DataFrame(r.json()).rename(columns={
+            "transaction_date": "TransactionDate",
+            "ticker":           "Ticker",
+            "type":             "Transaction",
+            "amount":           "Range",
+            "senator":          "Representative",
+        })
+        sdf["ReportDate"] = sdf["TransactionDate"]
+        sdf["House"] = "Senate"
+        sdf["Party"] = sdf["Representative"].apply(
+            lambda name: _SENATOR_PARTY.get(str(name).split()[-1].lower(), "") if pd.notna(name) else ""
+        )
+        frames.append(sdf)
+    except Exception as e:
+        st.warning(f"Could not fetch Senate trades: {e}")
+
+    # House: original S3 source (may be unavailable)
     try:
         r = requests.get(
             "https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/all_transactions.json",
-            headers=_HEADERS, timeout=30,
+            headers=_HEADERS, timeout=15,
         )
         r.raise_for_status()
         hdf = pd.DataFrame(r.json()).rename(columns={
@@ -29,28 +83,8 @@ def fetch_congress_trades():
         })
         hdf["House"] = "House"
         frames.append(hdf)
-    except Exception as e:
-        st.warning(f"Could not fetch House trades: {e}")
-
-    try:
-        r = requests.get(
-            "https://senate-stock-watcher-data.s3-us-west-2.amazonaws.com/aggregate/all_transactions.json",
-            headers=_HEADERS, timeout=30,
-        )
-        r.raise_for_status()
-        sdf = pd.DataFrame(r.json()).rename(columns={
-            "transaction_date": "TransactionDate",
-            "disclosure_date":  "ReportDate",
-            "ticker":           "Ticker",
-            "type":             "Transaction",
-            "amount":           "Range",
-            "senator":          "Representative",
-            "party":            "Party",
-        })
-        sdf["House"] = "Senate"
-        frames.append(sdf)
-    except Exception as e:
-        st.warning(f"Could not fetch Senate trades: {e}")
+    except Exception:
+        pass  # House data source currently unavailable
 
     if not frames:
         st.error("No trade data could be loaded.")
