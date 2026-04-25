@@ -33,6 +33,26 @@ h2, h3 {
 }
 hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
 
+/* Main content text — essential for dark background */
+[data-testid="stMain"] p,
+[data-testid="stMain"] span,
+[data-testid="stMain"] label,
+[data-testid="stMain"] li,
+.stMarkdown p { color: #cbd5e1 !important; }
+
+/* Expander header text */
+[data-testid="stExpander"] summary,
+[data-testid="stExpander"] summary p,
+[data-testid="stExpander"] summary span { color: #cbd5e1 !important; }
+
+/* Selectbox / radio / widget text */
+[data-testid="stSelectbox"] span,
+[data-testid="stRadio"] span,
+[data-testid="stSlider"] span { color: #94a3b8 !important; }
+
+/* Caption text */
+[data-testid="stCaptionContainer"] p { color: #4a6280 !important; }
+
 /* Hero */
 .hero {
     background: linear-gradient(135deg, #07102a 0%, #0d1e3f 50%, #091a31 100%);
@@ -164,10 +184,8 @@ PLOT_LAYOUT = dict(
     template="plotly_dark",
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(6,15,38,0.7)",
-    font=dict(color="#4a6280", size=11),
+    font=dict(color="#94a3b8", size=11),
     margin=dict(l=10, r=10, t=40, b=10),
-    xaxis=dict(gridcolor="#0d1c30", linecolor="#0d1c30", zerolinecolor="#0d1c30"),
-    yaxis=dict(gridcolor="#0d1c30", linecolor="#0d1c30"),
 )
 
 BUY_SELL_COLORS = {
