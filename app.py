@@ -17,10 +17,10 @@ st.markdown("""
 
 .block-container { padding-top: 1rem !important; padding-bottom: 3rem !important; }
 
-/* Force dark page background */
+/* Page background — slate-900, not black */
 [data-testid="stAppViewContainer"],
 [data-testid="stMain"],
-.main { background: #030814 !important; }
+.main { background: #0f172a !important; }
 
 /* Global typography */
 h2, h3 {
@@ -28,12 +28,12 @@ h2, h3 {
     font-weight: 700 !important;
     letter-spacing: -0.3px !important;
     padding-bottom: 0.45rem !important;
-    border-bottom: 1px solid #0f1e33 !important;
+    border-bottom: 1px solid #334155 !important;
     margin-bottom: 0.8rem !important;
 }
-hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
+hr { border-color: #1e293b !important; margin: 1.5rem 0 !important; }
 
-/* Main content text — essential for dark background */
+/* Main content text */
 [data-testid="stMain"] p,
 [data-testid="stMain"] span,
 [data-testid="stMain"] label,
@@ -43,7 +43,7 @@ hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
 /* Expander header text */
 [data-testid="stExpander"] summary,
 [data-testid="stExpander"] summary p,
-[data-testid="stExpander"] summary span { color: #cbd5e1 !important; }
+[data-testid="stExpander"] summary span { color: #e2e8f0 !important; }
 
 /* Selectbox / radio / widget text */
 [data-testid="stSelectbox"] span,
@@ -51,16 +51,16 @@ hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
 [data-testid="stSlider"] span { color: #94a3b8 !important; }
 
 /* Caption text */
-[data-testid="stCaptionContainer"] p { color: #4a6280 !important; }
+[data-testid="stCaptionContainer"] p { color: #64748b !important; }
 
 /* Hero */
 .hero {
-    background: linear-gradient(135deg, #07102a 0%, #0d1e3f 50%, #091a31 100%);
-    border: 1px solid rgba(56, 189, 248, 0.18);
+    background: linear-gradient(135deg, #1e3a5f 0%, #1a3353 50%, #162c47 100%);
+    border: 1px solid rgba(56, 189, 248, 0.25);
     border-radius: 18px;
     padding: 2.2rem 2.8rem;
     margin-bottom: 1.5rem;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
     position: relative;
     overflow: hidden;
 }
@@ -68,7 +68,7 @@ hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
     content: '';
     position: absolute;
     right: 0; top: 0; bottom: 0; width: 45%;
-    background: radial-gradient(ellipse at right center, rgba(56,189,248,0.08) 0%, transparent 70%);
+    background: radial-gradient(ellipse at right center, rgba(56,189,248,0.1) 0%, transparent 70%);
     pointer-events: none;
 }
 .hero h1 {
@@ -78,12 +78,12 @@ hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
     font-weight: 900;
     letter-spacing: -1.5px;
 }
-.hero p { color: #93c5fd; margin: 0.5rem 0 0; font-size: 1rem; opacity: 0.9; }
+.hero p { color: #bae6fd; margin: 0.5rem 0 0; font-size: 1rem; }
 .accent { color: #38bdf8; }
 .live-badge {
     display: inline-block;
-    background: rgba(34, 197, 94, 0.12);
-    border: 1px solid rgba(34, 197, 94, 0.3);
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.35);
     color: #86efac;
     font-size: 0.68rem;
     font-weight: 700;
@@ -96,17 +96,16 @@ hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
 
 /* Metric cards */
 [data-testid="metric-container"] {
-    background: linear-gradient(145deg, #0c1c38, #09152a) !important;
-    border: 1px solid #1d3857 !important;
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
     border-radius: 14px !important;
     padding: 1.2rem 1.5rem !important;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.5),
-                inset 0 1px 0 rgba(255,255,255,0.04) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3) !important;
 }
 [data-testid="stMetricLabel"] p,
 [data-testid="stMetricLabel"] label,
 [data-testid="stMetricLabel"] span {
-    color: #60a5fa !important;
+    color: #7dd3fc !important;
     font-size: 0.7rem !important;
     text-transform: uppercase !important;
     letter-spacing: 0.1em !important;
@@ -114,7 +113,7 @@ hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
 }
 [data-testid="stMetricValue"],
 [data-testid="stMetricValue"] * {
-    color: #ffffff !important;
+    color: #f8fafc !important;
     font-size: 2rem !important;
     font-weight: 800 !important;
     line-height: 1.15 !important;
@@ -122,19 +121,19 @@ hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
 
 /* Sidebar */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #04081a 0%, #070d20 100%) !important;
-    border-right: 1px solid #0f1e33 !important;
+    background: #0f172a !important;
+    border-right: 1px solid #1e293b !important;
 }
 [data-testid="stSidebar"] h2 {
     color: #38bdf8 !important;
     font-size: 0.85rem !important;
     text-transform: uppercase !important;
     letter-spacing: 0.12em !important;
-    border-bottom: 1px solid #0f1e33 !important;
+    border-bottom: 1px solid #1e293b !important;
     padding-bottom: 0.4rem !important;
 }
 [data-testid="stSidebar"] label {
-    color: #3b5270 !important;
+    color: #64748b !important;
     font-size: 0.7rem !important;
     text-transform: uppercase !important;
     letter-spacing: 0.08em !important;
@@ -143,30 +142,30 @@ hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
 
 /* Expanders — modern + legacy selectors */
 [data-testid="stExpander"] {
-    background: #060f26 !important;
-    border: 1px solid #152640 !important;
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
     border-radius: 12px !important;
     margin-bottom: 6px !important;
     overflow: hidden !important;
 }
 .streamlit-expanderHeader {
-    background: #060f26 !important;
-    border: 1px solid #152640 !important;
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
     border-radius: 10px !important;
     font-size: 0.88rem !important;
-    color: #cbd5e1 !important;
+    color: #e2e8f0 !important;
 }
 .streamlit-expanderContent {
-    background: #030a18 !important;
-    border: 1px solid #152640 !important;
+    background: #162032 !important;
+    border: 1px solid #334155 !important;
     border-top: none !important;
     border-radius: 0 0 10px 10px !important;
 }
 
 /* Alert / info boxes */
 [data-testid="stAlert"] {
-    background: #0b172e !important;
-    border-color: #1d3857 !important;
+    background: #1e293b !important;
+    border-color: #334155 !important;
     border-radius: 10px !important;
 }
 </style>
@@ -183,7 +182,7 @@ st.markdown("""
 PLOT_LAYOUT = dict(
     template="plotly_dark",
     paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="rgba(6,15,38,0.7)",
+    plot_bgcolor="rgba(30,41,59,0.5)",
     font=dict(color="#94a3b8", size=11),
     margin=dict(l=10, r=10, t=40, b=10),
 )
