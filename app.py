@@ -11,69 +11,144 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    .block-container { padding-top: 1.5rem; }
+/* ─────────────────────────────────────────
+   MarketWatch — Dark Theme
+───────────────────────────────────────── */
 
-    /* Hero banner */
-    .hero {
-        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-        border-radius: 14px;
-        padding: 1.8rem 2.5rem;
-        margin-bottom: 1.5rem;
-    }
-    .hero h1 {
-        color: #ffffff;
-        font-size: 2rem;
-        margin: 0;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-    }
-    .hero p { color: #94a3b8; margin: 0.4rem 0 0 0; font-size: 1rem; }
-    .accent { color: #38bdf8; }
+.block-container { padding-top: 1rem !important; padding-bottom: 3rem !important; }
 
-    /* Metric cards */
-    [data-testid="metric-container"] {
-        background: #1e293b;
-        border: 1px solid #334155;
-        border-radius: 10px;
-        padding: 0.8rem 1rem;
-    }
-    [data-testid="stMetricLabel"] p {
-        color: #94a3b8 !important;
-        font-size: 0.78rem !important;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-    }
-    [data-testid="stMetricValue"] {
-        color: #f1f5f9 !important;
-        font-size: 1.7rem !important;
-    }
+/* Force dark page background */
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+.main { background: #030814 !important; }
 
-    /* Sidebar */
-    [data-testid="stSidebar"] { background: #0f172a; }
-    [data-testid="stSidebar"] label {
-        color: #94a3b8 !important;
-        font-size: 0.78rem !important;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
+/* Global typography */
+h2, h3 {
+    color: #f1f5f9 !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.3px !important;
+    padding-bottom: 0.45rem !important;
+    border-bottom: 1px solid #0f1e33 !important;
+    margin-bottom: 0.8rem !important;
+}
+hr { border-color: #0f1e33 !important; margin: 1.5rem 0 !important; }
 
-    /* Section headers */
-    h2, h3 { color: #e2e8f0 !important; }
-    hr { border-color: #1e293b !important; margin: 1rem 0; }
+/* Hero */
+.hero {
+    background: linear-gradient(135deg, #07102a 0%, #0d1e3f 50%, #091a31 100%);
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    border-radius: 18px;
+    padding: 2.2rem 2.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
+    position: relative;
+    overflow: hidden;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0; width: 45%;
+    background: radial-gradient(ellipse at right center, rgba(56,189,248,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+.hero h1 {
+    color: #fff;
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+}
+.hero p { color: #93c5fd; margin: 0.5rem 0 0; font-size: 1rem; opacity: 0.9; }
+.accent { color: #38bdf8; }
+.live-badge {
+    display: inline-block;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #86efac;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border-radius: 20px;
+    margin-top: 0.85rem;
+}
 
-    /* Expanders */
-    .streamlit-expanderHeader {
-        background: #1e293b !important;
-        border: 1px solid #334155 !important;
-        border-radius: 8px !important;
-        font-size: 0.92rem !important;
-    }
-    .streamlit-expanderContent {
-        border: 1px solid #334155 !important;
-        border-top: none !important;
-        border-radius: 0 0 8px 8px !important;
-        background: #111827 !important;
-    }
+/* Metric cards */
+[data-testid="metric-container"] {
+    background: linear-gradient(145deg, #0c1c38, #09152a) !important;
+    border: 1px solid #1d3857 !important;
+    border-radius: 14px !important;
+    padding: 1.2rem 1.5rem !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.04) !important;
+}
+[data-testid="stMetricLabel"] p,
+[data-testid="stMetricLabel"] label,
+[data-testid="stMetricLabel"] span {
+    color: #60a5fa !important;
+    font-size: 0.7rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    font-weight: 700 !important;
+}
+[data-testid="stMetricValue"],
+[data-testid="stMetricValue"] * {
+    color: #ffffff !important;
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #04081a 0%, #070d20 100%) !important;
+    border-right: 1px solid #0f1e33 !important;
+}
+[data-testid="stSidebar"] h2 {
+    color: #38bdf8 !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.12em !important;
+    border-bottom: 1px solid #0f1e33 !important;
+    padding-bottom: 0.4rem !important;
+}
+[data-testid="stSidebar"] label {
+    color: #3b5270 !important;
+    font-size: 0.7rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 600 !important;
+}
+
+/* Expanders — modern + legacy selectors */
+[data-testid="stExpander"] {
+    background: #060f26 !important;
+    border: 1px solid #152640 !important;
+    border-radius: 12px !important;
+    margin-bottom: 6px !important;
+    overflow: hidden !important;
+}
+.streamlit-expanderHeader {
+    background: #060f26 !important;
+    border: 1px solid #152640 !important;
+    border-radius: 10px !important;
+    font-size: 0.88rem !important;
+    color: #cbd5e1 !important;
+}
+.streamlit-expanderContent {
+    background: #030a18 !important;
+    border: 1px solid #152640 !important;
+    border-top: none !important;
+    border-radius: 0 0 10px 10px !important;
+}
+
+/* Alert / info boxes */
+[data-testid="stAlert"] {
+    background: #0b172e !important;
+    border-color: #1d3857 !important;
+    border-radius: 10px !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -81,24 +156,27 @@ st.markdown("""
 <div class="hero">
     <h1>📈 Market<span class="accent">Watch</span></h1>
     <p>Real-time tracking of stock trades by members of the US Congress</p>
+    <span class="live-badge">● Live Data</span>
 </div>
 """, unsafe_allow_html=True)
 
 PLOT_LAYOUT = dict(
     template="plotly_dark",
     paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="rgba(30,41,59,0.4)",
-    font=dict(color="#94a3b8", size=12),
-    margin=dict(l=10, r=10, t=35, b=10),
+    plot_bgcolor="rgba(6,15,38,0.7)",
+    font=dict(color="#4a6280", size=11),
+    margin=dict(l=10, r=10, t=40, b=10),
+    xaxis=dict(gridcolor="#0d1c30", linecolor="#0d1c30", zerolinecolor="#0d1c30"),
+    yaxis=dict(gridcolor="#0d1c30", linecolor="#0d1c30"),
 )
 
 BUY_SELL_COLORS = {
-    "Purchase": "#22c55e",
-    "Buy": "#22c55e",
-    "Sale": "#ef4444",
-    "Sale (Full)": "#dc2626",
-    "Sale (Partial)": "#f97316",
-    "Exchange": "#a78bfa",
+    "Purchase": "#4ade80",
+    "Buy": "#4ade80",
+    "Sale": "#f87171",
+    "Sale (Full)": "#ef4444",
+    "Sale (Partial)": "#fb923c",
+    "Exchange": "#c084fc",
 }
 
 PARTY_BADGE = {"D": "🔵", "R": "🔴", "I": "🟢", "L": "🟡"}
