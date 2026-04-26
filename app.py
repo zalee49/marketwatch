@@ -148,12 +148,37 @@ hr { border-color: #1e293b !important; margin: 1.5rem 0 !important; }
     margin-bottom: 6px !important;
     overflow: hidden !important;
 }
+[data-testid="stExpander"] details summary,
+[data-testid="stExpander"] details summary:hover,
+[data-testid="stExpander"] details summary:focus,
+[data-testid="stExpander"] details summary:active,
+[data-testid="stExpander"] details[open] summary {
+    background: #1e293b !important;
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+[data-testid="stExpander"] summary {
+    background: #1e293b !important;
+    background-color: #1e293b !important;
+}
+[data-testid="stExpander"] summary:hover,
+[data-testid="stExpander"] summary:focus,
+[data-testid="stExpander"] summary:active {
+    background-color: #1e293b !important;
+    background: #1e293b !important;
+}
 .streamlit-expanderHeader {
     background: #1e293b !important;
     border: 1px solid #334155 !important;
     border-radius: 10px !important;
     font-size: 0.88rem !important;
     color: #e2e8f0 !important;
+}
+.streamlit-expanderHeader:hover,
+.streamlit-expanderHeader:focus,
+.streamlit-expanderHeader:active {
+    background: #1e293b !important;
+    background-color: #1e293b !important;
 }
 .streamlit-expanderContent {
     background: #162032 !important;
