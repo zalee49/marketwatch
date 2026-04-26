@@ -22,6 +22,30 @@ st.markdown("""
 [data-testid="stMain"],
 .main { background: #0f172a !important; }
 
+/* Header and top-right GitHub/Deploy button */
+[data-testid="stHeader"] {
+    background-color: transparent !important;
+}
+[data-testid="stToolbar"] {
+    right: 2rem !important;
+}
+/* This targets the Github Fork/Deploy button and styles it dark */
+[data-testid="stAppDeployButton"],
+.stDeployButton,
+[data-testid="stToolbar"] button {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+}
+[data-testid="stAppDeployButton"]:hover,
+.stDeployButton:hover,
+[data-testid="stToolbar"] button:hover {
+    background-color: #334155 !important;
+    border-color: #475569 !important;
+    color: #f8fafc !important;
+}
+
 /* Global typography */
 h2, h3 {
     color: #f1f5f9 !important;
